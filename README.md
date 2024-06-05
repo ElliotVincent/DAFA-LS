@@ -47,7 +47,7 @@ If you use our work in your project please cite:
 
 ```bibtex
 @article{vincent2024detecting,
-    title = {Looted Archaeological Sites from Satellite Image Time Serie},
+    title = {Detecting Looted Archaeological Sites from Satellite Image Time Serie},
     author = {Vincent, Elliot and Saroufim, Mehraïl and Chemla, Jonathan and Ubelmann, Yves and Marquis, Philippe and Ponce, Jean and Aubry, Mathieu},
     journal = {arXiv},
     year = {2024},
