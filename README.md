@@ -4,7 +4,7 @@ Detecting Looted Archaeological Sites from Satellite Image Time Series
 
 <a href="https://imagine.enpc.fr/~elliot.vincent/">Elliot Vincent</a>&emsp;
 <a href="https://iconem.fr/">Merhaïl Saroufim</a>&emsp;
-<a href="https://iconem.fr/">Jonathan Chemlat</a>&emsp;  
+<a href="https://iconem.fr/">Jonathan Chemla</a>&emsp;  
 <a href="https://iconem.fr/">Yves Ubelmann</a>&emsp;
 <a href="https://www.e-patrimoines.org/patrimoine/new_interactive_ress/la-delegation-archeologique-francaise-en-afghanistan/">Philippe Marquis</a>&emsp;
 <a href="https://www.di.ens.fr/~ponce/">Jean Ponce</a>&emsp;
