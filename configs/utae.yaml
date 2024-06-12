@@ -1,0 +1,42 @@
+dataset:
+  width: 128
+  height: 128
+  input_dim: 3
+  single: False
+  stats: dafa_ls
+  semantic: True
+  mask_mode: none
+  pixel_set: None
+model:
+  name: utae
+  input_dim: 3
+  encoder_widths: [16, 16, 16, 32]
+  decoder_widths: [8, 8, 16, 32]
+  out_conv: [8, 3]
+  str_conv_k: 4
+  str_conv_s: 2
+  str_conv_p: 1
+  agg_mode: "att_group"
+  encoder_norm: "group"
+  n_head: 4
+  d_model: 64
+  d_k: 4
+  encoder: False
+  return_maps: False
+  pad_value: 0
+  padding_mode: "reflect"
+training:
+  criterion: ce
+  ignore_index: 0
+  weight: False
+  n_epochs: 100
+  batch_size: 4
+  num_workers: 8
+  optimizer:
+    lr: 0.0001
+    weight_decay: 0.01
+  scheduler:
+    warmup: 100
+    gamma: 0.1
+    num_iter_per_step: [10000, 20000]
+    min_lr: 0.00001

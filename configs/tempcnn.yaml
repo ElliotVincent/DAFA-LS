@@ -1,0 +1,28 @@
+dataset:
+  input_dim: 3
+  single: False
+  stats: dafa_ls
+  mask_mode: none
+  pixel_set: none
+  pixel_wise: True
+model:
+  name: tempcnn
+  nker: [16,16,16]
+  nfc: [16,16]
+  mlp4: [16,32,32,2]
+  seq_len: 96
+  in_channels: 3
+training:
+  criterion: bce
+  weight: False
+  n_epochs: 2
+  batch_size: 128
+  num_workers: 8
+  optimizer:
+    lr: 0.0001
+    weight_decay: 0.01
+  scheduler:
+    warmup: 100
+    gamma: 0.1
+    num_iter_per_step: [30000, 40000]
+    min_lr: 0.00001
