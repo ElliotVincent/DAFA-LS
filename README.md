@@ -35,11 +35,24 @@ git clone git@github.com:ElliotVincent/DAFA-LS.git --recursive
 
 ### 2. Download the datasets
 
-TODO
+You can download the datasets using the code below or by following this link](https://drive.google.com/file/d/16v7_AcRwNeRhCacmQuX2477VYs51f4fU/view) (426M).
+
+```
+cd DAFA-LS
+mkdir datasets
+cd datasets
+gdown 16v7_AcRwNeRhCacmQuX2477VYs51f4fU
+unzip DAFA_LS.zip
+```
 
 ### 3. Create and activate virtual environment
 
-TODO
+```
+python3 -m venv dafals
+source dafals/bin/activate
+python3 -m pip install -r requirements.txt
+```
+This implementation uses Pytorch.
 
 ## Citing
 
