@@ -35,7 +35,7 @@ git clone git@github.com:ElliotVincent/DAFA-LS.git --recursive
 
 ### 2. Download the datasets
 
-You can download the datasets using the code below or by following this link](https://drive.google.com/file/d/16v7_AcRwNeRhCacmQuX2477VYs51f4fU/view) (426M).
+You can download the datasets using the code below or by following [this link](https://drive.google.com/file/d/16v7_AcRwNeRhCacmQuX2477VYs51f4fU/view) (426M).
 
 ```
 cd DAFA-LS
