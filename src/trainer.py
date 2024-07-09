@@ -74,15 +74,14 @@ def iterate(batch, device, model, criterion, metrics, single=False, pixel_wise=F
                 preds = [torch.tensor([1], device=device) for _ in range(len(preds))]
             preds = torch.stack(preds, dim=0) - 1
             label = ((label == 2).sum((1, 2)) > 0).int()
-            if mode == 'eval':
-                logits = [logits[batch_id][1:].flatten(1)[:, mask[batch_id] == 1] for batch_id in range(preds.shape[0])]
-                logits = torch.stack([curr_logits[:, torch.argmax(curr_logits, dim=0) == preds].mean(1) for curr_logits in logits])
-                curr_labels = label.long()
         else:
             preds = torch.argmax(logits, dim=1)
     if criterion._get_name() == 'BCEWithLogitsLoss':
         curr_labels = torch.nn.functional.one_hot(label, num_classes=2).float()
     loss = criterion(logits, curr_labels)
+    if semantic: 
+        logits = [logits[batch_id][1:].flatten(1)[:, mask[batch_id] == 1] for batch_id in range(preds.shape[0])]
+        logits = torch.stack([curr_logits[:, torch.argmax(curr_logits, dim=0) == preds[batch_id]].mean(1) for batch_id, curr_logits in enumerate(logits)])
     metrics.add(preds, label, loss, logits)
     return loss
 
