@@ -19,6 +19,7 @@ def iterate(batch, device, model, criterion, metrics, single=False, pixel_wise=F
         positions = torch.tensor(range(96), device=device)[None].expand(data.shape[0], -1)
         if mode == 'eval':
             data = data.squeeze(0)
+            positions = positions.expand(data.shape[0], -1)
             logits = None
             for k in range(data.shape[0] // 128 + int(data.shape[0] % 128 != 0)):
                 curr_data = data[k * 128: (k + 1) * 128]
