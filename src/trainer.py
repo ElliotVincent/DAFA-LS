@@ -71,6 +71,7 @@ def iterate(batch, device, model, criterion, metrics, single=False, pixel_wise=F
                 preds = [torch.mode(curr_preds)[0] for curr_preds in preds]
             except:
                 print("Only zeros in mask!")
+                mask = mask + 1
                 preds = [torch.tensor([1], device=device) for _ in range(len(preds))]
             preds = torch.stack(preds, dim=0) - 1
             label = ((label == 2).sum((1, 2)) > 0).int()
