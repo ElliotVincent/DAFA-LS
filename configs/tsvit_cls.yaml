@@ -9,6 +9,7 @@ dataset:
   pixel_set: None
 model:
   name: tsvit
+  mode: cls
   img_res: 128
   max_seq_len: 96
   num_channels: 3
