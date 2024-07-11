@@ -16,7 +16,7 @@ Detecting Looted Archaeological Sites from Satellite Image Time Series
 </div>
 
 Official PyTorch implementation of [**Detecting Looted Archaeological Sites from Satellite Image Time Series**](https://github.com/ElliotVincent/DAFA-LS).
-Check out our [**webpage**](https://imagine.enpc.fr/~elliot.vincent/) for other details!
+Check out our [**webpage**](https://imagine.enpc.fr/~elliot.vincent/dafals) for other details!
 
 We introduce the DAFA Looted Sites dataset (DAFA-LS), a labeled multi-temporal remote sensing dataset containing 55,480 images acquired monthly over 8 years across 675 Afghan archaeological sites, including 135 sites looted during the acquisition period. DAFA-LS is an interesting playground to assess the performance of satellite image time series (SITS) classification methods on a real and important use case.
 
