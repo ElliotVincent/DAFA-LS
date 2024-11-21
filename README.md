@@ -45,13 +45,15 @@ gdown 16v7_AcRwNeRhCacmQuX2477VYs51f4fU
 unzip DAFA_LS.zip
 ```
 
-### 3. Download pretrained weights for DOFA [1]
+### 3. Download pretrained weights for DOFA [1], SatMAE [10] and Scale-MAE [11]
 
 ```
 cd ..
 mkdir weights
 cd weights
 wget https://huggingface.co/XShadow/DOFA/resolve/main/DOFA_ViT_base_e100.pth?download=true
+wget https://zenodo.org/record/7369797/files/fmow_pretrain.pth
+wget https://github.com/bair-climate-initiative/scale-mae/releases/download/base-800/scalemae-vitlarge-800.pth
 ```
 
 ### 4. Create and activate virtual environment
@@ -69,7 +71,7 @@ If you use the repository for the first time, please create a `results` folder:
 ```
 mkdir results
 ```
-Now you can run the following command, replacing `<config_name>` by either `resnet` [2], `dofa` [1], `ltae` [3], `tempcnn` [4], `duplo` [5], `transformer` [6], `utae` [7], `tsvit_cls` [8], `tsvit_seg` [8], `pse_ltae` [9] or `dofa_ltae` [1,3].
+Now you can run the following command, replacing `<config_name>` by either `resnet` [2], `dofa` [1], `satmae` [10], `scalemae` [11], `ltae` [3], `tempcnn` [4], `duplo` [5], `transformer` [6], `utae` [7], `tsvit_cls` [8], `tsvit_seg` [8], `pse_ltae` [9], `dofa_ltae` [1,3], `satmae_ltae` [10,3] or `scalemae_ltae` [11,3].
 Replace `<exp_name>` by the experiment name of your choice. Output files will be located at `results/<exp_name>/`.
 ```
 PYTHONPATH=$PYTHONPATH:./src python src/trainer.py -t <exp_name> -c <config_name>.yaml
@@ -110,3 +112,5 @@ And if you use our dataset, please give proper attributions to Planet Labs:
 [7] V. S. F. Garnot et al. _Panoptic segmentation of satellite image time series with convolutional temporal attention networks_. (2021)  
 [8] M. Tarasiou et al. _Vits for sits: Vision transformers for satellite image time series_. (2023)  
 [9] V. S. F. Garnot et al. _Satellite image time series classification with pixel-set encoders and temporal self-attention_. (2020)  
+[10] Y. Cong et al. _Satmae: Pre-training transformers for temporal and multi-spectral satellite imagery_. (2022)
+[11] C. Reed et al. _Scale-mae: A scale-aware masked autoencoder for multiscale geospatial representation learning_. (2023)
