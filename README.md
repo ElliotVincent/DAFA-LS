@@ -112,5 +112,5 @@ And if you use our dataset, please give proper attributions to Planet Labs:
 [7] V. S. F. Garnot et al. _Panoptic segmentation of satellite image time series with convolutional temporal attention networks_. (2021)  
 [8] M. Tarasiou et al. _Vits for sits: Vision transformers for satellite image time series_. (2023)  
 [9] V. S. F. Garnot et al. _Satellite image time series classification with pixel-set encoders and temporal self-attention_. (2020)  
-[10] Y. Cong et al. _Satmae: Pre-training transformers for temporal and multi-spectral satellite imagery_. (2022)
+[10] Y. Cong et al. _Satmae: Pre-training transformers for temporal and multi-spectral satellite imagery_. (2022)  
 [11] C. Reed et al. _Scale-mae: A scale-aware masked autoencoder for multiscale geospatial representation learning_. (2023)
