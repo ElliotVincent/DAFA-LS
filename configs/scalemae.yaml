@@ -1,0 +1,25 @@
+dataset:
+  width: 224
+  height: 224
+  input_dim: 3
+  single: True
+  stats: imagenet
+  mask_mode: multiply
+  semantic: False
+  pixel_set: None
+model:
+  name: scalemae
+training:
+  criterion: bce
+  weight: False
+  n_epochs: 60
+  batch_size: 32
+  num_workers: 8
+  optimizer:
+    lr: 0.001
+    weight_decay: 0.01
+  scheduler:
+    warmup: 100
+    gamma: 0.1
+    num_iter_per_step: [1000, 200000]
+    min_lr: 0.00001
