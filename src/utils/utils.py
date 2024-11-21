@@ -7,13 +7,15 @@ import os
 from pathlib import Path
 from src.model.backbone_ltae import BackboneLTAE
 from src.datasets.dafa_ls import DAFA_LS
-from src.model.resnet import resnet20
+from src.model.resnet import resnet20, resnet18, resnet34
 from src.model.tempcnn import TempConv
 from src.model.utae import UTAE
 from src.model.tsvit import TSViT
 from src.model.transformer import TransformerEncoder
 from src.model.duplo import DuPLO
 from src.model.dofa import DOFA
+from src.model.scalemae import vit_large_patch16 as ScaleMAE
+from src.model.satmae import vit_large_patch16 as SatMAE
 from src.utils.paths import PROJECT_PATH
 
 
@@ -35,6 +37,30 @@ def get_model(config):
         for param in model.linear.parameters():
             param.requires_grad = True
 
+    elif name == 'resnet18':
+        if config['model'].get('pretrained', False):
+            model = resnet18(weights=torchvision.models.ResNet18_Weights.IMAGENET1K_V1)
+        else:
+            model = resnet18()
+        if config['model'].get('frozen', True):
+            for param in model.parameters():
+                param.requires_grad = False
+        model.fc = torch.nn.Linear(512, 2)
+        for param in model.fc.parameters():
+            param.requires_grad = True
+
+    elif name == 'resnet34':
+        if config['model'].get('pretrained', False):
+            model = resnet34(weights=torchvision.models.ResNet34_Weights.IMAGENET1K_V1)
+        else:
+            model = resnet34()
+        if config['model'].get('frozen', True):
+            for param in model.parameters():
+                param.requires_grad = False
+        model.fc = torch.nn.Linear(512, 2)
+        for param in model.fc.parameters():
+            param.requires_grad = True
+            
     elif name == 'dofa':
         model = DOFA(pretrained=True, is_head=True,
                      output_dim=2, path=os.path.join(PROJECT_PATH, 'weights/DOFA_ViT_base_e100.pth'),
@@ -45,6 +71,46 @@ def get_model(config):
         for param in model.head.parameters():
             param.requires_grad = True
 
+    elif name == 'satmae':
+        model = SatMAE()
+        model.head = None
+        pretrained = config['model'].get('pretrained', True)
+        frozen = config['model'].get('frozen', True)
+        if pretrained:
+            path = os.path.join(PROJECT_PATH, 'weights/fmow_pretrain.pth')
+            state_dict = torch.load(os.path.join(path))['model']
+            new_state_dict = {}
+            for key, val in state_dict.items():
+                if not 'decoder' in key and key != 'mask_token':
+                    new_state_dict[key] = val
+            model.load_state_dict(new_state_dict)
+        model.head = torch.nn.Linear(1024, 2)
+        if frozen:
+            for param in model.parameters():
+                param.requires_grad = False
+        for param in model.head.parameters():
+            param.requires_grad = True
+
+    elif name == 'scalemae':
+        model = ScaleMAE()
+        model.head = None
+        pretrained = config['model'].get('pretrained', True)
+        frozen = config['model'].get('frozen', True)
+        if pretrained:
+            path = os.path.join(PROJECT_PATH, 'weights/scalemae-vitlarge-800.pth')
+            state_dict = torch.load(os.path.join(path))['model']
+            new_state_dict = {}
+            for key, val in state_dict.items():
+                if not 'fpn.fpn' in key and not 'fcn_high' in key and not 'fcn_low' in key and not 'decoder' in key and key != 'mask_token':
+                    new_state_dict[key] = val
+            model.load_state_dict(new_state_dict)
+        model.head = torch.nn.Linear(1024, 2)
+        if frozen:
+            for param in model.parameters():
+                param.requires_grad = False
+        for param in model.head.parameters():
+            param.requires_grad = True
+    
     elif name == 'duplo':
         model = DuPLO(input_dim=config['model']['input_dim'],
                       nclasses=config['model']['nclasses'],
