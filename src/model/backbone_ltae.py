@@ -11,6 +11,8 @@ import torchvision
 from src.model.ltae import MultiHeadAttention
 from src.model.positional_encoding import PositionalEncoder
 from src.model.dofa import DOFA
+from src.model.scalemae import vit_large_patch16 as ScaleMAE
+from src.model.satmae import vit_large_patch16 as SatMAE
 from src.model.pse import PixelSetEncoder
 from src.utils.paths import PROJECT_PATH
 
@@ -137,6 +139,36 @@ class BackboneLTAE(nn.Module):
                 for param in self.img_encoder.parameters():
                     param.requires_grad = False
 
+        elif backbone == 'scalemae':
+            self.img_encoder = ScaleMAE()
+            self.img_encoder.head = None
+            if pretrained:
+                path = os.path.join(PROJECT_PATH, 'weights/scalemae-vitlarge-800.pth')
+                state_dict = torch.load(os.path.join(path))['model']
+                new_state_dict = {}
+                for key, val in state_dict.items():
+                    if not 'fpn.fpn' in key and not 'fcn_high' in key and not 'fcn_low' in key and not 'decoder' in key and key != 'mask_token':
+                        new_state_dict[key] = val
+                self.img_encoder.load_state_dict(new_state_dict)
+            if frozen:
+                for param in self.img_encoder.parameters():
+                    param.requires_grad = False
+
+        elif backbone == 'satmae':
+            self.img_encoder = SatMAE()
+            self.img_encoder.head = None
+            if pretrained:
+                path = os.path.join(PROJECT_PATH, 'weights/fmow_pretrain.pth')
+                state_dict = torch.load(os.path.join(path))['model']
+                new_state_dict = {}
+                for key, val in state_dict.items():
+                    if not 'decoder' in key and key != 'mask_token':
+                        new_state_dict[key] = val
+                self.img_encoder.load_state_dict(new_state_dict)
+            if frozen:
+                for param in self.img_encoder.parameters():
+                    param.requires_grad = False
+
         mlp_decoder = [mlp[-1],  32, num_classes]
         self.decoder = get_decoder(mlp_decoder)
 
@@ -164,7 +196,7 @@ class BackboneLTAE(nn.Module):
         elif self.backbone == 'pse':
             out = self.img_encoder((x, mask))
 
-        elif self.backbone == 'dofa':
+        elif self.backbone in  ['dofa', 'satmae', 'scalemae']:
             x = x.reshape(sz_b * seq_len, d, h, w)
             out = self.img_encoder(x)
             out = out.view(sz_b, seq_len, -1)
@@ -176,7 +208,7 @@ class BackboneLTAE(nn.Module):
             out = out.view(sz_b, seq_len, -1)
 
         else:
-            raise ValueError(f'backbone should be in [`mlp`, `pse`, `dofa`, `vit_b_16`, `resnet18`] not {self.backbone}')
+            raise ValueError(f'backbone should be in [`mlp`, `pse`, `dofa`, `vit_b_16`, `resnet18`, `satmae`, `scalemae`] not {self.backbone}')
 
         out = self.in_norm(out.permute(0, 2, 1)).permute(0, 2, 1)
 
