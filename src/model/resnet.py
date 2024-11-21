@@ -6,6 +6,7 @@ Copyright (c) 2018 Yerlan Idelbayev
 import torch.nn as nn
 import torch.nn.functional as F
 import torch.nn.init as init
+import torchvision
 
 __all__ = ['ResNet', 'resnet20']
 
@@ -93,3 +94,11 @@ class ResNet(nn.Module):
 
 def resnet20():
     return ResNet(BasicBlock, [3, 3, 3])
+
+
+def resnet18():
+    return torchvision.models.resnet18()
+
+
+def resnet34():
+    return torchvision.models.resnet34()
